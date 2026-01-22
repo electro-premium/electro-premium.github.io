@@ -1,0 +1,541 @@
+:root {
+  --bg-dark: #0C0C0C;
+  --yellow: #D4A017;
+  --yellow-light: #E8B53A;
+  --card-bg: rgba(20, 20, 20, 0.7);
+  --text-light: #F0F0F0;
+  --white: #FFFFFF;
+  --radius: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.svg-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.svg-bg img {
+  width: auto;
+  height: auto;
+  max-width: 90vw;
+  max-height: 90vh;
+  opacity: 0.12;
+  object-fit: contain;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* === Блоки === */
+.block-content {
+  padding: 2.5rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: left;
+}
+
+.block-left-wide {
+  padding: 2rem 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.block-left-wide .block-content {
+  max-width: 650px;
+  width: 100%;
+}
+
+.block-right-wide {
+  padding: 4rem 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.block-right-wide .block-content {
+  max-width: 650px;
+  width: 100%;
+}
+
+.block-full {
+  padding: 4rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.block-full .block-content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* === Стили контента === */
+.block-content h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--yellow-light);
+}
+
+.block-content h2 {
+  font-size: 2.1rem;
+  margin-bottom: 1.8rem;
+  color: var(--yellow);
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+  color: var(--yellow);
+}
+
+.desc {
+  margin: 0 0 2rem;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.buttons,
+.contact-buttons {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.9rem 2rem;
+  background: var(--yellow);
+  color: var(--bg-dark);
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  border: none;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.btn:hover {
+  background: var(--yellow-light);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(212, 160, 23, 0.4);
+}
+
+.btn-contact {
+  padding: 0.75rem 1.6rem;
+  font-size: 1rem;
+}
+
+.services-list,
+.geo-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.5rem;
+}
+
+.services-list li,
+.geo-list li {
+  padding: 0.6rem 0 0.6rem 1.8rem;
+  position: relative;
+  font-size: 1.05rem;
+}
+
+.services-list li::before,
+.geo-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--yellow);
+  border-radius: 50%;
+}
+
+.note {
+  text-align: left;
+  color: #FFCC00;
+  font-style: italic;
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* === Портфолио — фиксированная высота === */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+  margin-top: 1rem;
+}
+
+.portfolio .portfolio-grid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  display: block;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.portfolio .portfolio-grid img:hover {
+  transform: scale(1.03);
+}
+
+.more {
+  display: block;
+  margin: 2rem auto 0;
+  background: transparent;
+  color: var(--yellow);
+  border: 2px solid var(--yellow);
+  border-radius: 50px;
+  padding: 0.8rem 2.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.more:hover {
+  background: rgba(212, 160, 23, 0.15);
+}
+
+.contact-btn-wrapper {
+  position: relative;
+  display: inline-block;
+  min-width: 180px;
+}
+
+.contact-name-overlay {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(20, 20, 20, 0.9);
+  color: var(--yellow-light);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(212, 160, 23, 0.2);
+}
+
+.contact-btn-wrapper:hover .contact-name-overlay {
+  opacity: 1;
+  visibility: visible;
+  top: -36px;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .contact-btn-wrapper .btn:focus + .contact-name-overlay,
+  .contact-btn-wrapper .btn:active + .contact-name-overlay {
+    opacity: 1;
+    visibility: visible;
+    top: -36px;
+  }
+}
+
+.contact-btn-wrapper .btn {
+  width: 100%;
+  padding: 1rem 1.4rem;
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.contact-intro {
+  text-align: left;
+  margin: 0 0 1.8rem;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.small {
+  text-align: left;
+  margin-top: 1.5rem;
+  color: #aaa;
+  font-size: 0.95rem;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 50px;
+  height: 50px;
+  background: var(--yellow);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+}
+
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover {
+  background: var(--yellow-light);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* === Модальное окно звонка === */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(12, 12, 12, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.modal-content {
+  background: var(--card-bg);
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: var(--radius);
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  border: 1px solid rgba(212, 160, 23, 0.3);
+  box-shadow: 0 10px 30px rgba(212, 160, 23, 0.2);
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: var(--yellow);
+}
+
+.modal h3 {
+  color: var(--yellow-light);
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+.phone-number {
+  font-size: 1.4rem;
+  margin: 1rem 0;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+/* === Lightbox с листанием === */
+#imageModal {
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.92);
+  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#modalImage {
+  max-width: 60vw;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 0 30px rgba(212, 160, 23, 0.3);
+  animation: zoomIn 0.3s ease;
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* === Кнопки должны быть ПОЗИЦИОНИРОВАНЫ АБСОЛЮТНО === */
+.modal-close,
+.modal-nav {
+  position: absolute;
+  z-index: 2001;
+}
+
+.modal-close {
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.modal-close:hover {
+  color: var(--yellow);
+}
+
+.modal-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  transition: background 0.3s;
+}
+
+.modal-nav:hover {
+  background: rgba(212, 160, 23, 0.3);
+}
+
+#prevBtn {
+  left: 20px;
+}
+
+#nextBtn {
+  right: 20px;
+}
+
+/* === Футер === */
+.site-footer {
+  margin-top: 3rem;
+  padding: 1.8rem 0;
+  text-align: center;
+  color: #aaa;
+  font-size: 0.7rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.site-footer p {
+  margin: 0.4rem 0;
+}
+
+/* === Адаптация для iPhone и мобильных === */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .block-content {
+    padding: 1.6rem;
+  }
+
+  .block-content h1 { font-size: 2.0rem; }
+  .block-content h2 { font-size: 1.7rem; }
+  .subtitle { font-size: 1.15rem; }
+  .desc, .services-list li, .geo-list li { font-size: 0.95rem; }
+  .small { font-size: 0.85rem; }
+
+  .block-left-wide, .block-right-wide, .block-full {
+    display: flex !important;
+    justify-content: flex-start !important;
+  }
+
+  .block-content {
+    max-width: 100% !important;
+    text-align: left !important;
+  }
+
+  .note, .small { text-align: left !important; }
+
+  .buttons, .contact-buttons {
+    justify-content: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+
+  .btn {
+    width: auto;
+    min-width: 140px;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  .btn-contact {
+    padding: 0.65rem 1.4rem;
+    font-size: 0.95rem;
+    min-width: 130px;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio .portfolio-grid img {
+    height: 180px;
+  }
+
+  #modalImage {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+
+  .back-to-top {
+    bottom: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+    font-size: 15px;
+  }
+}
