@@ -23,7 +23,7 @@ body {
   position: relative;
 }
 
-.svg-bg {
+.bg-desktop {
   position: fixed;
   top: 0;
   left: 0;
@@ -37,13 +37,17 @@ body {
   align-items: center;
 }
 
-.svg-bg img {
+.bg-desktop img {
   width: auto;
   height: auto;
   max-width: 90vw;
   max-height: 90vh;
   opacity: 0.12;
   object-fit: contain;
+}
+
+.bg-mobile {
+  display: none; /* скрыт на десктопе */
 }
 
 .container {
@@ -78,7 +82,7 @@ body {
 }
 
 .block-right-wide {
-  padding: 4rem 0;
+  padding: 3rem 0;
   display: flex;
   justify-content: flex-end;
 }
@@ -89,7 +93,7 @@ body {
 }
 
 .block-full {
-  padding: 4rem 0;
+  padding: 3rem 0;
   display: flex;
   justify-content: center;
 }
@@ -458,7 +462,7 @@ body {
 
 /* === Футер === */
 .site-footer {
-  margin-top: 3rem;
+  margin-top: 2rem;
   padding: 1.8rem 0;
   text-align: center;
   color: #aaa;
@@ -472,6 +476,30 @@ body {
 
 /* === Адаптация для iPhone и мобильных === */
 @media (max-width: 768px) {
+
+  .bg-desktop {
+    display: none;
+  }
+
+  .bg-mobile {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+    .bg-mobile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.25; /* ← затемняем, чтобы текст читался */
+  }
+
   .container {
     padding: 0 1rem;
   }

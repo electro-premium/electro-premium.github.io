@@ -175,7 +175,7 @@ function initBackToTop() {
 
 // === Параллакс ===
 function initParallax() {
-  const svg = document.querySelector('.svg-bg img');
+  const svg = document.querySelector('.bg-desktop img');
   if (!svg) return;
 
   let scrollOffset = 0, mouseX = 0, mouseY = 0, ticking = false;
