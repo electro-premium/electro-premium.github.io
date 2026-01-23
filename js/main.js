@@ -1,6 +1,6 @@
 // === Настройки ===
 let allImagesLoaded = false;
-const VISIBLE_LIMIT = 4;
+const VISIBLE_LIMIT = 2;
 const MAX_IMAGES = 30;
 
 // === Загрузка портфолио ===
@@ -236,4 +236,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initBackToTop();
   initParallax();
   initSmartCall();
+
 });
