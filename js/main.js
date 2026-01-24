@@ -110,11 +110,9 @@ function showSwipeHint() {
   const hint = document.getElementById('swipeHint');
   if (!hint) return;
 
-  // Показываем
   hint.style.display = 'block';
   hint.classList.add('show');
 
-  // Скрываем через 2.5 секунды
   setTimeout(() => {
     hint.classList.remove('show');
     setTimeout(() => {
@@ -123,7 +121,7 @@ function showSwipeHint() {
   }, 2500);
 }
 
-// === Lightbox ===
+// === Открытие галереи ===
 function openLightbox(index) {
   const modalImg = document.getElementById('modalImage');
   const modal = document.getElementById('imageModal');
@@ -133,53 +131,67 @@ function openLightbox(index) {
     modal.style.display = 'flex';
     window.currentLightboxIndex = index;
 
-    // Показываем подсказку
+    // 🔒 Блокируем прокрутку фона
+    document.body.style.overflow = 'hidden';
+
     showSwipeHint();
   }
 }
 
-// === Навигация в lightbox ===
-document.getElementById('prevBtn')?.addEventListener('click', () => {
+// === Закрытие галереи ===
+function closeLightbox() {
+  const modal = document.getElementById('imageModal');
+  if (modal) {
+    modal.style.display = 'none';
+    // 🔓 Разблокируем прокрутку
+    document.body.style.overflow = '';
+  }
+}
+
+// === Простая навигация ===
+function navigateLightbox(direction) {
   const sources = window.portfolioSources || [];
   if (sources.length === 0) return;
 
   let idx = window.currentLightboxIndex || 0;
-  idx = (idx - 1 + sources.length) % sources.length;
-  document.getElementById('modalImage').src = sources[idx];
+  if (direction === 'next') {
+    idx = (idx + 1) % sources.length;
+  } else {
+    idx = (idx - 1 + sources.length) % sources.length;
+  }
+
+  const modalImg = document.getElementById('modalImage');
+  if (modalImg) {
+    modalImg.src = sources[idx];
+  }
+
   window.currentLightboxIndex = idx;
+}
+
+// === Кнопки навигации ===
+document.getElementById('prevBtn')?.addEventListener('click', () => {
+  navigateLightbox('prev');
 });
 
 document.getElementById('nextBtn')?.addEventListener('click', () => {
-  const sources = window.portfolioSources || [];
-  if (sources.length === 0) return;
-
-  let idx = window.currentLightboxIndex || 0;
-  idx = (idx + 1) % sources.length;
-  document.getElementById('modalImage').src = sources[idx];
-  window.currentLightboxIndex = idx;
+  navigateLightbox('next');
 });
 
-// === Закрытие модальных окон ===
-document.querySelector('.modal-close')?.addEventListener('click', () => {
-  document.getElementById('imageModal').style.display = 'none';
-});
+// === Закрытие по крестику и фону ===
+document.querySelector('.modal-close')?.addEventListener('click', closeLightbox);
 
-document.querySelector('.close')?.addEventListener('click', () => {
-  document.getElementById('callModal').style.display = 'none';
-});
-
-window.addEventListener('click', (e) => {
-  if (e.target.id === 'imageModal' || e.target.id === 'callModal') {
-    e.target.style.display = 'none';
+document.getElementById('imageModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'imageModal') {
+    closeLightbox();
   }
 });
 
 // === Управление клавишами ===
 window.addEventListener('keydown', (e) => {
   if (document.getElementById('imageModal').style.display === 'flex') {
-    if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
-    if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
-    if (e.key === 'Escape') document.getElementById('imageModal').style.display = 'none';
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') navigateLightbox('prev');
+    if (e.key === 'ArrowRight') navigateLightbox('next');
   }
 });
 
@@ -197,11 +209,9 @@ function initBackToTop() {
   });
 }
 
-// === Параллакс ===
+// === Параллакс (только на десктопе) ===
 function initParallax() {
-  // Надёжная проверка мобильного устройства
-  const isMobile = window.matchMedia("(max-width: 768px)").matches;
-  if (isMobile) return;
+  if (window.innerWidth <= 768) return;
 
   const svg = document.querySelector('.bg-desktop img');
   if (!svg) return;
@@ -258,19 +268,22 @@ function initSmartCall() {
   });
 }
 
-// === Свайп для мобильных устройств ===
+// === Простой свайп для мобильных ===
 function initSwipe() {
   const modal = document.getElementById('imageModal');
   if (!modal) return;
 
+  const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (!isMobile) return;
+
   let startX = 0;
 
   modal.addEventListener('touchstart', (e) => {
-    startX = e.changedTouches[0].screenX;
+    startX = e.touches[0].clientX;
   });
 
   modal.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].screenX;
+    const endX = e.changedTouches[0].clientX;
     const diff = startX - endX;
     const threshold = 50;
 

@@ -348,7 +348,6 @@ body {
 .modal-content {
   background: var(--card-bg);
   margin: 10% auto;
-  padding: 2rem;
   border-radius: var(--radius);
   width: 90%;
   max-width: 400px;
@@ -383,7 +382,7 @@ body {
   font-weight: 600;
 }
 
-/* === Lightbox с листанием === */
+/* === Lightbox — обновлённая версия === */
 #imageModal {
   position: fixed;
   z-index: 2000;
@@ -391,59 +390,60 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.92);
-  backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.94); /* чуть темнее */
+  backdrop-filter: blur(2px);
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
+  overflow: hidden; /* ← запрещаем прокрутку внутри */
 }
 
 #modalImage {
-  max-width: 60vw;
-  max-height: 80vh;
+  max-width: 90vw;
+  max-height: 85vh;
   width: auto;
   height: auto;
   border-radius: 12px;
-  box-shadow: 0 0 30px rgba(212, 160, 23, 0.3);
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.4);
   animation: zoomIn 0.3s ease;
 }
+
+
 
 @keyframes zoomIn {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
-/* === Кнопки должны быть ПОЗИЦИОНИРОВАНЫ АБСОЛЮТНО === */
+/* === Кнопки навигации === */
 .modal-close,
 .modal-nav {
   position: absolute;
   z-index: 2001;
+  color: white;
+  cursor: pointer;
+  user-select: none;
 }
 
 .modal-close {
   top: 20px;
-  right: 30px;
-  color: #fff;
-  font-size: 40px;
+  right: 20px;
+  font-size: 32px;
   font-weight: bold;
-  cursor: pointer;
   transition: color 0.3s;
 }
 
 .modal-close:hover {
-  color: var(--yellow);
+  color: var(--yellow-light);
 }
 
 .modal-nav {
   top: 50%;
   transform: translateY(-50%);
-  color: white;
-  font-size: 32px;
-  cursor: pointer;
-  user-select: none;
-  padding: 10px;
-  border-radius: 10%;
+  font-size: 28px;
+  padding: 12px;
+  border-radius: 50%;
   background: rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
 }
