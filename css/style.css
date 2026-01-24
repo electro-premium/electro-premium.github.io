@@ -66,7 +66,7 @@ body {
   -webkit-backdrop-filter: blur(8px);
   border-radius: var(--radius);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid #ffffff0d;
   text-align: left;
 }
 
@@ -443,7 +443,7 @@ body {
   cursor: pointer;
   user-select: none;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 10%;
   background: rgba(0, 0, 0, 0.3);
   transition: background 0.3s;
 }
@@ -474,8 +474,40 @@ body {
   margin: 0.4rem 0;
 }
 
+
+/* === Подсказка свайпа === */
+.swipe-hint {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: #E8B53A;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.9s ease, visibility 0.3s ease;
+  pointer-events: none;
+  z-index: 2002;
+}
+
+.swipe-hint.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+
 /* === Адаптация для iPhone и мобильных === */
 @media (max-width: 768px) {
+
+
+  .modal-nav {
+    display: none;
+  }
 
   .bg-desktop {
     display: none;

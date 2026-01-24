@@ -102,6 +102,27 @@ document.getElementById('showMore')?.addEventListener('click', function () {
   }
 });
 
+// === Показ подсказки свайпа на мобильных ===
+function showSwipeHint() {
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (!isMobile) return;
+
+  const hint = document.getElementById('swipeHint');
+  if (!hint) return;
+
+  // Показываем
+  hint.style.display = 'block';
+  hint.classList.add('show');
+
+  // Скрываем через 2.5 секунды
+  setTimeout(() => {
+    hint.classList.remove('show');
+    setTimeout(() => {
+      hint.style.display = 'none';
+    }, 300);
+  }, 2500);
+}
+
 // === Lightbox ===
 function openLightbox(index) {
   const modalImg = document.getElementById('modalImage');
@@ -111,6 +132,9 @@ function openLightbox(index) {
     modalImg.src = window.portfolioSources[index];
     modal.style.display = 'flex';
     window.currentLightboxIndex = index;
+
+    // Показываем подсказку
+    showSwipeHint();
   }
 }
 
@@ -175,7 +199,8 @@ function initBackToTop() {
 
 // === Параллакс ===
 function initParallax() {
-  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // Надёжная проверка мобильного устройства
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
   if (isMobile) return;
 
   const svg = document.querySelector('.bg-desktop img');
@@ -233,11 +258,39 @@ function initSmartCall() {
   });
 }
 
+// === Свайп для мобильных устройств ===
+function initSwipe() {
+  const modal = document.getElementById('imageModal');
+  if (!modal) return;
+
+  let startX = 0;
+
+  modal.addEventListener('touchstart', (e) => {
+    startX = e.changedTouches[0].screenX;
+  });
+
+  modal.addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].screenX;
+    const diff = startX - endX;
+    const threshold = 50;
+
+    if (Math.abs(diff) < threshold) return;
+
+    if (diff > 0) {
+      // Свайп влево → следующее фото
+      document.getElementById('nextBtn')?.click();
+    } else {
+      // Свайп вправо → предыдущее фото
+      document.getElementById('prevBtn')?.click();
+    }
+  });
+}
+
 // === Инициализация ===
 document.addEventListener('DOMContentLoaded', () => {
   loadInitialPortfolio();
   initBackToTop();
   initParallax();
   initSmartCall();
-
+  initSwipe();
 });
