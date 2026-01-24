@@ -211,7 +211,13 @@ function initBackToTop() {
 
 // === Параллакс (только на десктопе) ===
 function initParallax() {
-  if (window.innerWidth <= 768) return;
+  // Полная блокировка на мобильных
+  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    return;
+  }
+  if (window.innerWidth <= 768) {
+    return;
+  }
 
   const svg = document.querySelector('.bg-desktop img');
   if (!svg) return;
