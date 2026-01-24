@@ -175,6 +175,9 @@ function initBackToTop() {
 
 // === Параллакс ===
 function initParallax() {
+  const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  if (isMobile) return;
+
   const svg = document.querySelector('.bg-desktop img');
   if (!svg) return;
 
