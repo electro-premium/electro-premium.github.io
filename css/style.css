@@ -530,6 +530,8 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0.25; /* ← затемняем, чтобы текст читался */
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   .container {
@@ -598,4 +600,5 @@ body {
     height: 42px;
     font-size: 15px;
   }
+
 }
