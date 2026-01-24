@@ -209,54 +209,7 @@ function initBackToTop() {
   });
 }
 
-// === Параллакс (только на десктопе) ===
-function initParallax() {
-  // Полная блокировка на мобильных
-  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    return;
-  }
-  if (window.innerWidth <= 768) {
-    return;
-  }
 
-  const svg = document.querySelector('.bg-desktop img');
-  if (!svg) return;
-
-  let scrollOffset = 0, mouseX = 0, mouseY = 0, ticking = false;
-
-  window.addEventListener('scroll', () => {
-    scrollOffset = window.scrollY * 0.04;
-    requestTick();
-  });
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = (e.clientX - window.innerWidth / 2) / 50;
-    mouseY = (e.clientY - window.innerHeight / 2) / 50;
-    requestTick();
-  });
-
-  function requestTick() {
-    if (!ticking) {
-      requestAnimationFrame(updateTransform);
-      ticking = true;
-    }
-  }
-
-  function updateTransform() {
-    const clampedScroll = Math.min(scrollOffset, 15);
-    const x = mouseX * 0.8;
-    const y = -clampedScroll + (mouseY * 0.6);
-    const rotateY = mouseX * 0.04;
-    const rotateX = -mouseY * 0.04;
-
-    svg.style.transform = `
-      translate(${x}px, ${y}px)
-      rotateY(${rotateY}deg)
-      rotateX(${rotateX}deg)
-    `;
-    ticking = false;
-  }
-}
 
 // === Умная кнопка звонка ===
 function initSmartCall() {
@@ -312,4 +265,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallax();
   initSmartCall();
   initSwipe();
+
 });
