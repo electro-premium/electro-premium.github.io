@@ -15,7 +15,6 @@
 }
 
 body {
-  -webkit-overflow-scrolling: touch;
   font-family: 'Poppins', sans-serif;
   background-color: var(--bg-dark);
   color: var(--text-light);
@@ -524,8 +523,6 @@ body {
     z-index: -1;
     overflow: hidden;
     pointer-events: none;
-    transform: translateZ(0); /* аппаратное ускорение */
-    backface-visibility: hidden;
   }
 
     .bg-mobile img {
@@ -533,7 +530,6 @@ body {
     height: 100%;
     object-fit: cover;
     opacity: 0.25; /* ← затемняем, чтобы текст читался */
-    will-change: transform;
   }
 
   .container {
