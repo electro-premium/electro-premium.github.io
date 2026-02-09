@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Запрещаем индексировать служебные файлы
+Disallow: /google-site-verification.html
+Disallow: /manifest.json
+
+
+
+# Указываем карту сайта
+Sitemap: https://electro-premium.github.io/sitemap.xml
