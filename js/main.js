@@ -7,11 +7,8 @@ const MAX_IMAGES = 30;
 function loadPortfolioImages(count = VISIBLE_LIMIT) {
   const portfolioGrid = document.getElementById('portfolioGrid');
   if (!portfolioGrid) return;
-
-  // Очищаем галерею
   portfolioGrid.innerHTML = '';
   const sources = [];
-
   let loadedCount = 0;
 
   function loadImage(index) {
@@ -37,15 +34,10 @@ function loadPortfolioImages(count = VISIBLE_LIMIT) {
       portfolioGrid.appendChild(el);
       sources.push(imgPath);
       loadedCount++;
-
       loadImage(index + 1);
     };
 
-    img.onerror = () => {
-      // Пропускаем несуществующие файлы
-      loadImage(index + 1);
-    };
-
+    img.onerror = () => loadImage(index + 1);
     img.src = imgPath;
   }
 
@@ -59,14 +51,12 @@ function loadInitialPortfolio() {
 function loadAllPortfolio() {
   const portfolioGrid = document.getElementById('portfolioGrid');
   if (!portfolioGrid) return;
-
   portfolioGrid.innerHTML = '';
   const sources = [];
 
   for (let i = 1; i <= MAX_IMAGES; i++) {
     const imgPath = `img/portfolio/work${i}.jpg`;
     const img = new Image();
-
     img.onload = () => {
       const el = document.createElement('img');
       el.src = imgPath;
@@ -81,11 +71,8 @@ function loadAllPortfolio() {
       portfolioGrid.appendChild(el);
       sources.push(imgPath);
     };
-
-    // Не добавляем в sources при ошибке
     img.src = imgPath;
   }
-
   window.portfolioSources = sources;
 }
 
@@ -106,87 +93,55 @@ document.getElementById('showMore')?.addEventListener('click', function () {
 function showSwipeHint() {
   const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   if (!isMobile) return;
-
   const hint = document.getElementById('swipeHint');
   if (!hint) return;
-
   hint.style.display = 'block';
   hint.classList.add('show');
-
   setTimeout(() => {
     hint.classList.remove('show');
-    setTimeout(() => {
-      hint.style.display = 'none';
-    }, 300);
+    setTimeout(() => hint.style.display = 'none', 300);
   }, 2500);
 }
 
-// === Открытие галереи ===
+// === Галерея ===
 function openLightbox(index) {
   const modalImg = document.getElementById('modalImage');
   const modal = document.getElementById('imageModal');
-
   if (modalImg && modal && window.portfolioSources) {
     modalImg.src = window.portfolioSources[index];
     modal.style.display = 'flex';
     window.currentLightboxIndex = index;
-
-    // 🔒 Блокируем прокрутку фона
     document.body.style.overflow = 'hidden';
-
     showSwipeHint();
   }
 }
 
-// === Закрытие галереи ===
 function closeLightbox() {
   const modal = document.getElementById('imageModal');
   if (modal) {
     modal.style.display = 'none';
-    // 🔓 Разблокируем прокрутку
     document.body.style.overflow = '';
   }
 }
 
-// === Простая навигация ===
 function navigateLightbox(direction) {
   const sources = window.portfolioSources || [];
   if (sources.length === 0) return;
-
   let idx = window.currentLightboxIndex || 0;
-  if (direction === 'next') {
-    idx = (idx + 1) % sources.length;
-  } else {
-    idx = (idx - 1 + sources.length) % sources.length;
-  }
-
+  if (direction === 'next') idx = (idx + 1) % sources.length;
+  else idx = (idx - 1 + sources.length) % sources.length;
   const modalImg = document.getElementById('modalImage');
-  if (modalImg) {
-    modalImg.src = sources[idx];
-  }
-
+  if (modalImg) modalImg.src = sources[idx];
   window.currentLightboxIndex = idx;
 }
 
-// === Кнопки навигации ===
-document.getElementById('prevBtn')?.addEventListener('click', () => {
-  navigateLightbox('prev');
-});
-
-document.getElementById('nextBtn')?.addEventListener('click', () => {
-  navigateLightbox('next');
-});
-
-// === Закрытие по крестику и фону ===
+// === Обработчики галереи ===
+document.getElementById('prevBtn')?.addEventListener('click', () => navigateLightbox('prev'));
+document.getElementById('nextBtn')?.addEventListener('click', () => navigateLightbox('next'));
 document.querySelector('.modal-close')?.addEventListener('click', closeLightbox);
-
 document.getElementById('imageModal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'imageModal') {
-    closeLightbox();
-  }
+  if (e.target.id === 'imageModal') closeLightbox();
 });
-
-// === Управление клавишами ===
 window.addEventListener('keydown', (e) => {
   if (document.getElementById('imageModal').style.display === 'flex') {
     if (e.key === 'Escape') closeLightbox();
@@ -199,26 +154,14 @@ window.addEventListener('keydown', (e) => {
 function initBackToTop() {
   const btn = document.getElementById('backToTop');
   if (!btn) return;
-
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('show', window.scrollY > 400);
-  });
-
-  btn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  window.addEventListener('scroll', () => btn.classList.toggle('show', window.scrollY > 400));
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 }
 
 // === Параллакс (только на десктопе) ===
 function initParallax() {
-  // Полная блокировка на мобильных
-  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    return;
-  }
-  if (window.innerWidth <= 768) {
-    return;
-  }
-
+  if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) return;
+  if (window.innerWidth <= 768) return;
   const svg = document.querySelector('.bg-desktop img');
   if (!svg) return;
 
@@ -248,12 +191,7 @@ function initParallax() {
     const y = -clampedScroll + (mouseY * 0.6);
     const rotateY = mouseX * 0.04;
     const rotateX = -mouseY * 0.04;
-
-    svg.style.transform = `
-      translate(${x}px, ${y}px)
-      rotateY(${rotateY}deg)
-      rotateX(${rotateX}deg)
-    `;
+    svg.style.transform = `translate(${x}px, ${y}px) rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
     ticking = false;
   }
 }
@@ -262,7 +200,6 @@ function initParallax() {
 function initSmartCall() {
   const modal = document.getElementById('callModal');
   if (!modal) return;
-
   document.querySelectorAll('a[href^="tel:"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
       const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -274,34 +211,30 @@ function initSmartCall() {
   });
 }
 
+// === Закрытие модального окна звонка ===
+document.querySelector('#callModal .close')?.addEventListener('click', () => {
+  document.getElementById('callModal').style.display = 'none';
+});
+document.getElementById('callModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'callModal') {
+    e.target.style.display = 'none';
+  }
+});
+
 // === Простой свайп для мобильных ===
 function initSwipe() {
   const modal = document.getElementById('imageModal');
   if (!modal) return;
-
   const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   if (!isMobile) return;
-
   let startX = 0;
-
-  modal.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
-
+  modal.addEventListener('touchstart', (e) => startX = e.touches[0].clientX);
   modal.addEventListener('touchend', (e) => {
     const endX = e.changedTouches[0].clientX;
     const diff = startX - endX;
-    const threshold = 50;
-
-    if (Math.abs(diff) < threshold) return;
-
-    if (diff > 0) {
-      // Свайп влево → следующее фото
-      document.getElementById('nextBtn')?.click();
-    } else {
-      // Свайп вправо → предыдущее фото
-      document.getElementById('prevBtn')?.click();
-    }
+    if (Math.abs(diff) < 50) return;
+    if (diff > 0) document.getElementById('nextBtn')?.click();
+    else document.getElementById('prevBtn')?.click();
   });
 }
 
